@@ -1,3 +1,25 @@
+"""
+Модуль base_page.py
+
+Этот модуль определяет базовую страницу (`BasePage`)
+для взаимодействия с элементами веб-интерфейса.
+Используется совместно с Selenium для автоматизации
+тестирования веб-приложений.
+
+Импортируемые модули:
+- `By`: используется для выбора элементов на странице
+различными способами (id, class name, xpath и др.).
+- `WebDriverWait`: применяется для ожидания появления элемента на странице.
+- `expected_conditions`: набор предопределенных условий
+для проверки состояния страницы.
+- `Tuple`: импорт типа данных Tuple для аннотаций типов.
+
+Класс:
+- `BasePage`: Базовый класс для всех страниц приложения,
+содержащий общие методы и свойства,
+такие как ожидание загрузки страницы и работа с элементами.
+"""
+
 from selenium.webdriver.common.by import By
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
@@ -23,8 +45,8 @@ class BasePage:
         """
         self.browser.get(url)
 
-    def wait_for_element(self, locator: Tuple[By, str],
-                         timeout: int = 10) -> object:
+    def wait_for_element(
+            self, locator: Tuple[By, str], timeout: int = 10) -> object:
         """
         Ждет появления элемента на странице в течение указанного таймаута.
 
@@ -32,5 +54,6 @@ class BasePage:
         :param timeout: Таймаут ожидания элемента в секундах.
         :return: Веб-элемент, если он появился.
         """
-        return (WebDriverWait(self.browser, timeout)
-                .until(EC.presence_of_element_located(locator)))
+        return WebDriverWait(self.browser, timeout).until(
+            EC.presence_of_element_located(locator)
+        )
